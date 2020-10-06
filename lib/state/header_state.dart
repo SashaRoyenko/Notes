@@ -17,18 +17,33 @@ class HeaderState {
   }
 
   void nextPage() {
-    _index++;
-    _noteColor = _UN_ACTIVE_COLOR;
-    _toDoColor = _ACTIVE_COLOR;
+    if(_index + 1 < 2) {
+      _index++;
+      _noteColor = _UN_ACTIVE_COLOR;
+      _toDoColor = _ACTIVE_COLOR;
+    }
   }
 
   void previousPage() {
-    _index--;
-    _noteColor = _ACTIVE_COLOR;
-    _toDoColor = _UN_ACTIVE_COLOR;
+    if(_index - 1 >=0) {
+      _index--;
+      _noteColor = _ACTIVE_COLOR;
+      _toDoColor = _UN_ACTIVE_COLOR;
+    }
   }
 
   void updateState() {
+    switch (index) {
+      case 0:
+        nextPage();
+        break;
+      case 1:
+        previousPage();
+        break;
+    }
+  }
+
+  void updateStateToPage(int index) {
     switch (index) {
       case 0:
         nextPage();

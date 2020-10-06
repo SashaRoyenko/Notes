@@ -21,7 +21,9 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             IconButton(
-              onPressed: _updatePage,
+              onPressed: () {
+                _updatePage(1);
+              },
               icon: Icon(Icons.assignment),
               color: widget._state.noteColor,
             ),
@@ -29,7 +31,9 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               padding: EdgeInsets.symmetric(horizontal: 15),
             ),
             IconButton(
-              onPressed: _updatePage,
+              onPressed: () {
+                _updatePage(0);
+              },
               icon: Icon(Icons.check_box),
               color: widget._state.toDoColor,
             ),
@@ -47,9 +51,9 @@ class _HeaderWidgetState extends State<HeaderWidget> {
     );
   }
 
-  void _updatePage() {
+  void _updatePage(int index) {
     setState(() {
-      widget._state.updateState();
+      widget._state.updateStateToPage(index);
       widget._notifyParent.call();
     });
   }
