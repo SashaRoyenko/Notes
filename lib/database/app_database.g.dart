@@ -105,6 +105,16 @@ class _$NoteDao extends NoteDao {
                   'text': item.text,
                   'json_formatted_text': item.jsonFormattedText,
                   'update_date': item.updateDate
+                }),
+        _noteUpdateAdapter = UpdateAdapter(
+            database,
+            'notes',
+            ['id'],
+            (Note item) => <String, dynamic>{
+                  'id': item.id,
+                  'text': item.text,
+                  'json_formatted_text': item.jsonFormattedText,
+                  'update_date': item.updateDate
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -121,6 +131,8 @@ class _$NoteDao extends NoteDao {
 
   final InsertionAdapter<Note> _noteInsertionAdapter;
 
+  final UpdateAdapter<Note> _noteUpdateAdapter;
+
   @override
   Future<List<Note>> findAllNotesOrderByUpdateDate() async {
     return _queryAdapter.queryList(
@@ -129,7 +141,7 @@ class _$NoteDao extends NoteDao {
   }
 
   @override
-  Future<void> delete(int id) async {
+  Future<void> deleteNote(int id) async {
     await _queryAdapter.queryNoReturn('DELETE FROM notes WHERE id = ?',
         arguments: <dynamic>[id]);
   }
@@ -137,5 +149,10 @@ class _$NoteDao extends NoteDao {
   @override
   Future<void> insertNote(Note note) async {
     await _noteInsertionAdapter.insert(note, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateNote(Note note) async {
+    await _noteUpdateAdapter.update(note, OnConflictStrategy.abort);
   }
 }

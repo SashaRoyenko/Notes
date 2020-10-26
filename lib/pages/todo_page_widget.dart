@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:notes/pages/parts/todo_item_widget.dart';
 
 class ToDoPageWidget extends StatefulWidget {
   @override

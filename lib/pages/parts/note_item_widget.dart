@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 
 class NoteItemWidget extends StatefulWidget {
-  final String _text;
-  final String _date;
-  static int tappedItem = 0;
-
-  NoteItemWidget(this._text, this._date);
+  final Key key;
+  final String text;
+  final String date;
+  final ValueChanged<bool> isSelectedCallback;
+  final isAnySelected;
+  bool isSelected;
+  NoteItemWidget({this.text, this.date, this.isSelectedCallback, this.isAnySelected, this.key, this.isSelected});
 
   @override
   State<StatefulWidget> createState() => _NoteItemWidgetState();
 }
 
-class _NoteItemWidgetState extends State<NoteItemWidget> {
-  bool isSelected = false;
+class _NoteItemWidgetState extends State<NoteItemWidget>
+    with AutomaticKeepAliveClientMixin<NoteItemWidget>
+{
+//  bool widget.isSelected = false;
   double _opacity = 0.0;
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return GestureDetector(
       onLongPress: _updateSelectStatusOnLongPress,
       onTap: _updateSelectStatusOnTap,
@@ -31,7 +42,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget._text,
+              widget.text,
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -51,7 +62,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget> {
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    widget._date,
+                    widget.date,
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -68,18 +79,18 @@ class _NoteItemWidgetState extends State<NoteItemWidget> {
 
   void _updateSelectStatusOnLongPress() {
     setState(() {
-      isSelected = !isSelected;
-      _opacity = isSelected ? 1.0 : 0.0;
-      int count = NoteItemWidget.tappedItem;
-      NoteItemWidget.tappedItem = isSelected
-          ? NoteItemWidget.tappedItem = count + 1
-          : NoteItemWidget.tappedItem = count - 1;
+      widget.isSelected = !widget.isSelected;
+      _opacity = widget.isSelected ? 1.0 : 0.0;
+      widget.isSelectedCallback(widget.isSelected);
     });
   }
 
   void _updateSelectStatusOnTap() {
-    if (isSelected || NoteItemWidget.tappedItem > 0) {
-      _updateSelectStatusOnLongPress();
-    }
+      if(widget.isAnySelected) {
+        _updateSelectStatusOnLongPress();
+      }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

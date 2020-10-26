@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class HeaderState {
+class HeaderState extends ChangeNotifier {
   int _index = 0;
 
   Color _noteColor;
@@ -17,7 +17,7 @@ class HeaderState {
   }
 
   void nextPage() {
-    if(_index + 1 < 2) {
+    if (_index + 1 < 2) {
       _index++;
       _noteColor = _UN_ACTIVE_COLOR;
       _toDoColor = _ACTIVE_COLOR;
@@ -25,11 +25,21 @@ class HeaderState {
   }
 
   void previousPage() {
-    if(_index - 1 >=0) {
+    if (_index - 1 >= 0) {
       _index--;
       _noteColor = _ACTIVE_COLOR;
       _toDoColor = _UN_ACTIVE_COLOR;
     }
+  }
+
+  void nextPageWithNotify() {
+    nextPage();
+    notifyListeners();
+  }
+
+  void previousPageWithNotify() {
+    previousPage();
+    notifyListeners();
   }
 
   void updateState() {

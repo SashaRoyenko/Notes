@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:notes/state/header_state.dart';
+import 'package:provider/provider.dart';
 
 class HeaderWidget extends StatefulWidget {
-  final Function() _notifyParent;
-  final HeaderState _state;
 
-  HeaderWidget(this._state, this._notifyParent);
+  final Function() _notifyParent;
+  HeaderWidget(this._notifyParent);
 
   @override
   State<StatefulWidget> createState() => _HeaderWidgetState();
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
+  HeaderState _state;
   @override
   Widget build(BuildContext context) {
+    _state = Provider.of<HeaderState>(context);
     return Stack(
       children: [
         Row(
@@ -25,7 +27,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 _updatePage(1);
               },
               icon: Icon(Icons.assignment),
-              color: widget._state.noteColor,
+              color: _state.noteColor,
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
@@ -35,7 +37,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 _updatePage(0);
               },
               icon: Icon(Icons.check_box),
-              color: widget._state.toDoColor,
+              color: _state.toDoColor,
             ),
           ],
         ),
@@ -53,7 +55,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
   void _updatePage(int index) {
     setState(() {
-      widget._state.updateStateToPage(index);
+      _state.updateStateToPage(index);
       widget._notifyParent.call();
     });
   }

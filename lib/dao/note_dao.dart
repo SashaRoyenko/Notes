@@ -10,6 +10,9 @@ abstract class NoteDao {
   @insert
   Future<void> insertNote(Note note);
 
+  @update
+  Future<void> updateNote(Note note);
+
   @Query(SqlScripts.DELETE_NOTE_BY_ID)
-  Future<void> delete(int id);
+  Future<void> deleteNote(int id);
 }

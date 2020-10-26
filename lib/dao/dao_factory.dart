@@ -1,6 +1,6 @@
 import 'package:notes/dao/note_dao.dart';
 
-import 'app_database.dart';
+import '../database/app_database.dart';
 
 class DaoFactory {
 
@@ -10,8 +10,7 @@ class DaoFactory {
 
   static final DaoFactory _instance = DaoFactory._();
 
-  DaoFactory._() {
-  }
+  DaoFactory._();
 
   static setUp() async {
     _database = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
