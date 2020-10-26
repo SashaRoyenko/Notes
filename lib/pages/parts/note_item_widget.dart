@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:notes/entity/note.dart';
+import 'package:notes/enums/app_routes.dart';
 
 class NoteItemWidget extends StatefulWidget {
   final Key key;
-  final String text;
-  final String date;
+  final Note note;
   final ValueChanged<bool> isSelectedCallback;
   final isAnySelected;
   bool isSelected;
-  NoteItemWidget({this.text, this.date, this.isSelectedCallback, this.isAnySelected, this.key, this.isSelected});
+
+  NoteItemWidget(
+      {this.isSelectedCallback,
+      this.isAnySelected,
+      this.key,
+      this.isSelected, this.note});
 
   @override
   State<StatefulWidget> createState() => _NoteItemWidgetState();
 }
 
 class _NoteItemWidgetState extends State<NoteItemWidget>
-    with AutomaticKeepAliveClientMixin<NoteItemWidget>
-{
+    with AutomaticKeepAliveClientMixin<NoteItemWidget> {
 //  bool widget.isSelected = false;
   double _opacity = 0.0;
-
 
   @override
   void initState() {
@@ -30,7 +35,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
     super.build(context);
     return GestureDetector(
       onLongPress: _updateSelectStatusOnLongPress,
-      onTap: _updateSelectStatusOnTap,
+      onTap: () => _updateSelectStatusOnTap(context),
       behavior: HitTestBehavior.deferToChild,
       child: Container(
         padding: EdgeInsets.all(10),
@@ -42,7 +47,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.text,
+              widget.note.text,
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -62,7 +67,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
-                    widget.date,
+                    formattedDate(),
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -85,10 +90,18 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
     });
   }
 
-  void _updateSelectStatusOnTap() {
-      if(widget.isAnySelected) {
-        _updateSelectStatusOnLongPress();
-      }
+  void _updateSelectStatusOnTap(context) {
+    if (widget.isAnySelected) {
+      _updateSelectStatusOnLongPress();
+    } else {
+      final navigator = Navigator.of(context);
+      navigator.pushNamed(AppRoutes.NOTE, arguments: widget.note);
+    }
+  }
+
+  String formattedDate() {
+    final DateFormat formatter = DateFormat('dd MMMM');
+    return formatter.format(DateTime.parse(widget.note.updateDate));
   }
 
   @override

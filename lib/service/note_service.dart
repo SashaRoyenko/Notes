@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:notes/dao/note_dao.dart';
-import 'file:///D:/KPI/4.1/flutter/notes/lib/dao/dao_factory.dart';
 import 'package:notes/entity/note.dart';
 
-class NoteService extends ChangeNotifier{
+import 'file:///D:/KPI/4.1/flutter/notes/lib/dao/dao_factory.dart';
 
+class NoteService extends ChangeNotifier {
   Future<List<Note>> findAllNotesOrderByUpdateDate() async {
     DaoFactory daoFactory = await DaoFactory.getInstance();
     NoteDao noteDao = daoFactory.noteDao;
@@ -23,8 +23,14 @@ class NoteService extends ChangeNotifier{
     if (note.text.isNotEmpty && regex.stringMatch(note.text).isEmpty) {
       DaoFactory daoFactory = await DaoFactory.getInstance();
       NoteDao noteDao = daoFactory.noteDao;
-      noteDao.insertNote(note);
+      if (note.id == null) {
+        noteDao.insertNote(note);
+      } else {
+        updateNote(note);
+      }
       notifyListeners();
+    } else if (note.id != null) {
+      delete(note.id);
     }
   }
 

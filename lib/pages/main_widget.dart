@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes/enums/app_rouetes.dart';
+import 'package:notes/enums/app_routes.dart';
 import 'package:notes/factory/app_bar_factory.dart';
 import 'package:notes/pages/add_note_page_widget.dart';
 import 'package:notes/pages/note_page_widget.dart';

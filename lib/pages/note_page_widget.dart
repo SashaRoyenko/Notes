@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:intl/intl.dart';
 import 'package:notes/entity/note.dart';
 import 'package:notes/factory/app_bar_factory.dart';
 import 'package:notes/pages/parts/note_item_widget.dart';
@@ -48,12 +47,8 @@ class _NotePageState extends State<NotePageWidget>
       crossAxisCount: 2,
       itemCount: notes.length,
       itemBuilder: (BuildContext context, int index) {
-        final DateFormat formatter = DateFormat('dd MMMM');
-        String formattedDate =
-            formatter.format(DateTime.parse(notes[index].updateDate));
         return NoteItemWidget(
-            text: notes[index].text,
-            date: formattedDate,
+            note: notes[index],
             isSelected: selectedNotes.contains(notes[index]) ? true : false,
             isAnySelected: selectedNotes.length > 0,
             key: Key(notes[index].id.toString()),

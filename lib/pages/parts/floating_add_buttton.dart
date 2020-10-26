@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/enums/app_rouetes.dart';
+import 'package:notes/enums/app_routes.dart';
 
 class FloatingAddButton extends StatefulWidget {
   @override

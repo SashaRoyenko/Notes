@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/entity/note.dart';
@@ -11,6 +13,7 @@ class AddNotePageWidget extends StatefulWidget {
 }
 
 class _AddNotePageWidgetState extends State<AddNotePageWidget> {
+  Note _note;
   NoteService _noteService = NoteService();
 
   /// Allows to control the editor and the document.
@@ -30,6 +33,11 @@ class _AddNotePageWidgetState extends State<AddNotePageWidget> {
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
     _noteService = Provider.of<NoteService>(context);
+    _note = ModalRoute.of(context).settings.arguments;
+    if (_note != null) {
+      var formattedText = json.decode(_note.jsonFormattedText);
+      _controller = ZefyrController(NotusDocument.fromJson(formattedText));
+    }
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -54,9 +62,14 @@ class _AddNotePageWidgetState extends State<AddNotePageWidget> {
 
   void _saveNote() {
     String plainText = _controller.document.toPlainText();
-    String jsonFormatText = _controller.document.toJson().toString();
+    String jsonFormatText = jsonEncode(_controller.document);
     String createdDate = DateTime.now().toIso8601String();
-    Note note = Note(null, plainText, jsonFormatText, createdDate);
+    Note note;
+    if (_note == null) {
+      note = Note(null, plainText, jsonFormatText, createdDate);
+    } else {
+      note = Note(_note.id, plainText, jsonFormatText, createdDate);
+    }
     _noteService.insertNote(note);
   }
 }
