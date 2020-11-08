@@ -24,6 +24,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
     with AutomaticKeepAliveClientMixin<NoteItemWidget> {
 //  bool widget.isSelected = false;
   double _opacity = 0.0;
+  bool _isWantKeepAlive = false;
 
   @override
   void initState() {
@@ -85,6 +86,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
   void _updateSelectStatusOnLongPress() {
     setState(() {
       widget.isSelected = !widget.isSelected;
+      _isWantKeepAlive =! _isWantKeepAlive;
       _opacity = widget.isSelected ? 1.0 : 0.0;
       widget.isSelectedCallback(widget.isSelected);
     });
@@ -105,5 +107,5 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => _isWantKeepAlive;
 }

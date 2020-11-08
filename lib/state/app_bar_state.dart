@@ -19,8 +19,5 @@ class AppBarState extends ChangeNotifier{
 
   Widget get mainBar => _mainBar;
 
-  void notify() {
-    notifyListeners();
-  }
 }
 

@@ -8,13 +8,6 @@ class NoteService extends ChangeNotifier {
   Future<List<Note>> findAllNotesOrderByUpdateDate() async {
     DaoFactory daoFactory = await DaoFactory.getInstance();
     NoteDao noteDao = daoFactory.noteDao;
-//    for(int i = 0; i < 7; i++) {
-//      noteDao.insertNote(Note(null,
-//          "Description The analyzer produces this diagnostic when a function invocation is found, but the name being referenced isn’t the name of a function, or when the expression computing the function doesn’t compute a function.",
-//          "Description The analyzer produces this diagnostic when a function invocation is found, but the name being referenced isn’t the name of a function, or when the expression computing the function doesn’t compute a function.",
-//          DateTime.now().toIso8601String()
-//      ));
-//    }
     return await noteDao.findAllNotesOrderByUpdateDate();
   }
 

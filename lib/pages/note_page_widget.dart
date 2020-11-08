@@ -13,8 +13,7 @@ class NotePageWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _NotePageState();
 }
 
-class _NotePageState extends State<NotePageWidget>
-    with AutomaticKeepAliveClientMixin<NotePageWidget> {
+class _NotePageState extends State<NotePageWidget> {
   NoteService _noteService;
   Set<Note> selectedNotes = Set();
   AppBarState _appBarState;
@@ -26,7 +25,6 @@ class _NotePageState extends State<NotePageWidget>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     _noteService = Provider.of<NoteService>(context);
     return FutureBuilder<List<Note>>(
         future: _noteService.findAllNotesOrderByUpdateDate(),
@@ -81,7 +79,4 @@ class _NotePageState extends State<NotePageWidget>
       _appBarState.appBar = _appBarState.mainBar;
     });
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

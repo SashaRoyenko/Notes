@@ -67,9 +67,12 @@ class _AddNotePageWidgetState extends State<AddNotePageWidget> {
     Note note;
     if (_note == null) {
       note = Note(null, plainText, jsonFormatText, createdDate);
+      _noteService.insertNote(note);
     } else {
-      note = Note(_note.id, plainText, jsonFormatText, createdDate);
+      if (jsonFormatText != _note.jsonFormattedText) {
+        note = Note(_note.id, plainText, jsonFormatText, createdDate);
+        _noteService.insertNote(note);
+      }
     }
-    _noteService.insertNote(note);
   }
 }

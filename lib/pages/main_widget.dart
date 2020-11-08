@@ -17,7 +17,6 @@ class MainWidget extends StatefulWidget {
 
 class _MainWidgetState extends State<MainWidget>
     with SingleTickerProviderStateMixin {
-
   List<Widget> pages = [NotePageWidget(), ToDoPageWidget()];
   HeaderState _headerState;
   AnimationController _animationController;
