@@ -11,10 +11,8 @@ class NoteItemWidget extends StatefulWidget {
   bool isSelected;
 
   NoteItemWidget(
-      {this.isSelectedCallback,
-      this.isAnySelected,
-      this.key,
-      this.isSelected, this.note});
+      {this.isSelectedCallback, this.isAnySelected, this.key, this.note})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _NoteItemWidgetState();
@@ -22,9 +20,9 @@ class NoteItemWidget extends StatefulWidget {
 
 class _NoteItemWidgetState extends State<NoteItemWidget>
     with AutomaticKeepAliveClientMixin<NoteItemWidget> {
-//  bool widget.isSelected = false;
   double _opacity = 0.0;
   bool _isWantKeepAlive = false;
+  bool _isSelected = false;
 
   @override
   void initState() {
@@ -85,10 +83,10 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
 
   void _updateSelectStatusOnLongPress() {
     setState(() {
-      widget.isSelected = !widget.isSelected;
-      _isWantKeepAlive =! _isWantKeepAlive;
-      _opacity = widget.isSelected ? 1.0 : 0.0;
-      widget.isSelectedCallback(widget.isSelected);
+      _isSelected = !_isSelected;
+      _isWantKeepAlive = !_isWantKeepAlive;
+      _opacity = _isSelected ? 1.0 : 0.0;
+      widget.isSelectedCallback(_isSelected);
     });
   }
 
@@ -105,6 +103,7 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
     final DateFormat formatter = DateFormat('dd MMMM');
     return formatter.format(DateTime.parse(widget.note.updateDate));
   }
+
 
   @override
   bool get wantKeepAlive => _isWantKeepAlive;

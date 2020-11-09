@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:notes/enums/app_routes.dart';
 import 'package:notes/factory/app_bar_factory.dart';
-import 'package:notes/pages/add_note_page_widget.dart';
-import 'package:notes/pages/note_page_widget.dart';
 import 'package:notes/pages/parts/floating_add_buttton.dart';
-import 'package:notes/pages/todo_page_widget.dart';
+import 'package:notes/pages/todo/todo_page_widget.dart';
 import 'package:notes/service/note_service.dart';
 import 'package:notes/state/app_bar_state.dart';
 import 'package:notes/state/header_state.dart';
 import 'package:provider/provider.dart';
+
+import 'note/add_note_page_widget.dart';
+import 'note/note_page_widget.dart';
 
 class MainWidget extends StatefulWidget {
   @override
