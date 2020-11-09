@@ -62,6 +62,8 @@ class _$AppDatabase extends AppDatabase {
 
   NoteDao _noteDaoInstance;
 
+  TodoItemDao _todoItemDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -81,6 +83,8 @@ class _$AppDatabase extends AppDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `notes` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `text` TEXT NOT NULL, `json_formatted_text` TEXT NOT NULL, `update_date` TEXT NOT NULL)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `todo_items` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `text` TEXT NOT NULL, `update_date` TEXT NOT NULL, `is_done` INTEGER NOT NULL)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -91,6 +95,11 @@ class _$AppDatabase extends AppDatabase {
   @override
   NoteDao get noteDao {
     return _noteDaoInstance ??= _$NoteDao(database, changeListener);
+  }
+
+  @override
+  TodoItemDao get todoItemDao {
+    return _todoItemDaoInstance ??= _$TodoItemDao(database, changeListener);
   }
 }
 
@@ -123,12 +132,6 @@ class _$NoteDao extends NoteDao {
 
   final QueryAdapter _queryAdapter;
 
-  static final _notesMapper = (Map<String, dynamic> row) => Note(
-      row['id'] as int,
-      row['text'] as String,
-      row['json_formatted_text'] as String,
-      row['update_date'] as String);
-
   final InsertionAdapter<Note> _noteInsertionAdapter;
 
   final UpdateAdapter<Note> _noteUpdateAdapter;
@@ -137,7 +140,11 @@ class _$NoteDao extends NoteDao {
   Future<List<Note>> findAllNotesOrderByUpdateDate() async {
     return _queryAdapter.queryList(
         'SELECT * FROM notes ORDER BY update_date DESC',
-        mapper: _notesMapper);
+        mapper: (Map<String, dynamic> row) => Note(
+            row['id'] as int,
+            row['text'] as String,
+            row['json_formatted_text'] as String,
+            row['update_date'] as String));
   }
 
   @override
@@ -154,5 +161,62 @@ class _$NoteDao extends NoteDao {
   @override
   Future<void> updateNote(Note note) async {
     await _noteUpdateAdapter.update(note, OnConflictStrategy.abort);
+  }
+}
+
+class _$TodoItemDao extends TodoItemDao {
+  _$TodoItemDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _todoItemInsertionAdapter = InsertionAdapter(
+            database,
+            'todo_items',
+            (TodoItem item) => <String, dynamic>{
+                  'id': item.id,
+                  'text': item.text,
+                  'update_date': item.updateDate,
+                  'is_done': item.isDone ? 1 : 0
+                }),
+        _todoItemUpdateAdapter = UpdateAdapter(
+            database,
+            'todo_items',
+            ['id'],
+            (TodoItem item) => <String, dynamic>{
+                  'id': item.id,
+                  'text': item.text,
+                  'update_date': item.updateDate,
+                  'is_done': item.isDone ? 1 : 0
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<TodoItem> _todoItemInsertionAdapter;
+
+  final UpdateAdapter<TodoItem> _todoItemUpdateAdapter;
+
+  @override
+  Future<List<TodoItem>> findAllNotesOrderByUpdateDate() async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM todo_items ORDER BY update_date, is_done DESC',
+        mapper: (Map<String, dynamic> row) => TodoItem());
+  }
+
+  @override
+  Future<void> deleteNote(int id) async {
+    await _queryAdapter.queryNoReturn('DELETE FROM todo_items WHERE id = ?',
+        arguments: <dynamic>[id]);
+  }
+
+  @override
+  Future<void> insertNote(TodoItem note) async {
+    await _todoItemInsertionAdapter.insert(note, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> updateNote(TodoItem note) async {
+    await _todoItemUpdateAdapter.update(note, OnConflictStrategy.abort);
   }
 }

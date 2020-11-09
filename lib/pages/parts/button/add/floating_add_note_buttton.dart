@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/enums/app_routes.dart';
 
-class FloatingAddButton extends StatefulWidget {
+class FloatingAddNoteButton extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _FloatingAddButtonState();
+  State<StatefulWidget> createState() => _FloatingAddNoteButtonState();
 }
 
-class _FloatingAddButtonState extends State<FloatingAddButton> {
+class _FloatingAddNoteButtonState extends State<FloatingAddNoteButton> {
   @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);

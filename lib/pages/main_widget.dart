@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notes/enums/app_routes.dart';
 import 'package:notes/factory/app_bar_factory.dart';
-import 'package:notes/pages/parts/floating_add_buttton.dart';
+import 'package:notes/pages/parts/button/add/floating_add_note_buttton.dart';
+import 'package:notes/pages/parts/button/add/floating_add_todo_item_buttton.dart';
+import 'package:notes/pages/todo/add_todo_item_widget.dart';
 import 'package:notes/pages/todo/todo_page_widget.dart';
 import 'package:notes/service/note_service.dart';
 import 'package:notes/state/app_bar_state.dart';
@@ -71,11 +73,12 @@ class _MainWidgetState extends State<MainWidget>
 //            children: pages,
 //        ),
 //        ),
-                floatingActionButton: FloatingAddButton(),
+                floatingActionButton: getAddButton(),
               ),
               theme: ThemeData.dark(),
               routes: {
                 AppRoutes.NOTE: (context) => AddNotePageWidget(),
+                AppRoutes.TODO: (context) => AddTodoItemPageWidget(),
               },
             );
           },
@@ -106,5 +109,11 @@ class _MainWidgetState extends State<MainWidget>
         function.call();
       });
     });
+  }
+
+  Widget getAddButton() {
+    return _headerState.index == 0
+        ? FloatingAddNoteButton()
+        : FloatingAddTodoItemButton();
   }
 }
