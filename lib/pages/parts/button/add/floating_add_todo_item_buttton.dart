@@ -8,7 +8,6 @@ class FloatingAddTodoItemButton extends StatefulWidget {
 }
 
 class _FloatingAddTodoItemButtonState extends State<FloatingAddTodoItemButton> {
-
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -32,10 +31,11 @@ class _FloatingAddTodoItemButtonState extends State<FloatingAddTodoItemButton> {
           barrierColor: Colors.transparent,
           builder: (BuildContext context) {
             return Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: AddTodoItemPageWidget(),
-            );
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: AddTodoItemPageWidget(
+                  parentCallback: () => Navigator.pop(context),
+                ));
           },
         );
       },

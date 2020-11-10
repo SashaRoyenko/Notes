@@ -5,6 +5,13 @@ import 'package:notes/service/todo_item_service.dart';
 import 'package:provider/provider.dart';
 
 class AddTodoItemPageWidget extends StatefulWidget {
+  final Function parentCallback;
+
+  final TodoItem todoItem;
+
+  const AddTodoItemPageWidget({Key key, this.parentCallback, this.todoItem})
+      : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _AddTodoPageWidgetState();
 }
@@ -18,6 +25,9 @@ class _AddTodoPageWidgetState extends State<AddTodoItemPageWidget> {
   void initState() {
     super.initState();
     textEditingController.addListener(_checkTextField);
+    if (widget.todoItem != null) {
+      textEditingController.text = widget.todoItem.text;
+    }
   }
 
   @override
@@ -89,6 +99,7 @@ class _AddTodoPageWidgetState extends State<AddTodoItemPageWidget> {
     var date = DateTime.now().toIso8601String();
     TodoItem todoItem = TodoItem(null, textEditingController.text, date, false);
     _todoItemService.insertTodoItem(todoItem);
+    widget.parentCallback.call();
   }
 
   _checkTextField() {
