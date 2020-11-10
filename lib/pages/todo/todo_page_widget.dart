@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:notes/entity/todo_item.dart';
 import 'package:notes/pages/todo/todo_item_widget.dart';
+import 'package:notes/service/todo_item_service.dart';
+import 'package:provider/provider.dart';
 
 class ToDoPageWidget extends StatefulWidget {
   @override
@@ -7,41 +10,36 @@ class ToDoPageWidget extends StatefulWidget {
 }
 
 class _ToDoPageWidgetState extends State<ToDoPageWidget> {
-//  List<NoteItemWidget> _notes = _getWidgets();
+  TodoItemService _todoItemService;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(10),
-      itemCount: 5,
-      separatorBuilder: (BuildContext context, int index) => const SizedBox(
-        height: 10,
-      ),
-      itemBuilder: (BuildContext context, int index) => _getWidgets()[index],
-    );
+    _todoItemService = Provider.of<TodoItemService>(context);
+
+    return FutureBuilder<List<TodoItem>>(
+        future: _todoItemService.findAllTodoItemsOrderByUpdateDate(),
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? _todoItemListViewWidget(snapshot.data, context)
+              : Center(
+                  child: CircularProgressIndicator(),
+                );
+        });
   }
 
   var isSelected = false;
   var mycolor = Colors.white;
 
-  List<Widget> _getWidgets() {
-//    List<Widget> notes = List.generate(
-////      20,
-////        (index) => ListTile(
-////            selected: isSelected,
-////            leading: const Icon(Icons.info),
-////            title: new Text("Test"),
-////            subtitle: new Text("Test Desc"),
-////            trailing: new Text("3"),
-////            onLongPress: toggleSelection // what should I put here,
-////        )
-////    );
-    List<Widget> todoWidgets = List.generate(
-        5,
-        (index) => ToDoItemWidget(
-          "Finish labs"
-        ));
-    return todoWidgets;
+  Widget _todoItemListViewWidget(List<TodoItem> data, context) {
+    return ListView.separated(
+      padding: const EdgeInsets.all(10),
+      itemCount: data.length,
+      separatorBuilder: (BuildContext context, int index) => const SizedBox(
+        height: 10,
+      ),
+      itemBuilder: (BuildContext context, int index) =>
+          ToDoItemWidget(data[index]),
+    );
   }
 
   void toggleSelection() {

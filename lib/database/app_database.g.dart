@@ -198,25 +198,29 @@ class _$TodoItemDao extends TodoItemDao {
   final UpdateAdapter<TodoItem> _todoItemUpdateAdapter;
 
   @override
-  Future<List<TodoItem>> findAllNotesOrderByUpdateDate() async {
+  Future<List<TodoItem>> findAllTodoItemsOrderByUpdateDate() async {
     return _queryAdapter.queryList(
-        'SELECT * FROM todo_items ORDER BY update_date, is_done DESC',
-        mapper: (Map<String, dynamic> row) => TodoItem());
+        'SELECT * FROM todo_items ORDER BY update_date DESC',
+        mapper: (Map<String, dynamic> row) => TodoItem(
+            row['id'] as int,
+            row['text'] as String,
+            row['update_date'] as String,
+            (row['is_done'] as int) != 0));
   }
 
   @override
-  Future<void> deleteNote(int id) async {
+  Future<void> deleteTodoItem(int id) async {
     await _queryAdapter.queryNoReturn('DELETE FROM todo_items WHERE id = ?',
         arguments: <dynamic>[id]);
   }
 
   @override
-  Future<void> insertNote(TodoItem note) async {
+  Future<void> insertTodoItem(TodoItem note) async {
     await _todoItemInsertionAdapter.insert(note, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updateNote(TodoItem note) async {
+  Future<void> updateTodoItem(TodoItem note) async {
     await _todoItemUpdateAdapter.update(note, OnConflictStrategy.abort);
   }
 }

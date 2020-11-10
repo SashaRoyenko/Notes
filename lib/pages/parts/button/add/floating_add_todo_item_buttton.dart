@@ -8,6 +8,7 @@ class FloatingAddTodoItemButton extends StatefulWidget {
 }
 
 class _FloatingAddTodoItemButtonState extends State<FloatingAddTodoItemButton> {
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(

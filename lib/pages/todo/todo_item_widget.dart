@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:notes/enums/app_routes.dart';
+import 'package:notes/entity/todo_item.dart';
 
 class ToDoItemWidget extends StatefulWidget {
-  final String _text;
+  final TodoItem _todoItem;
   final ValueChanged<bool> isSelectedCallback;
   bool isAnySelected = false;
 
-  ToDoItemWidget(this._text, {this.isSelectedCallback, this.isAnySelected});
+  ToDoItemWidget(this._todoItem, {this.isSelectedCallback, this.isAnySelected});
 
   @override
   State<StatefulWidget> createState() => _ToDoItemWidgetState();
@@ -34,21 +34,23 @@ class _ToDoItemWidgetState extends State<ToDoItemWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Checkbox(
-              value: chValue,
+              value: widget._todoItem.isDone,
               onChanged: (bool value) {
                 setState(() {
-                  chValue = value;
+                  widget._todoItem.isDone = value;
                 });
               },
               activeColor: Colors.amber,
             ),
             Text(
-              widget._text,
+              widget._todoItem.text,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
-                decoration: TextDecoration.lineThrough,
+                decoration: widget._todoItem.isDone
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
               ),
             ),
             Opacity(

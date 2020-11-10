@@ -6,6 +6,7 @@ import 'package:notes/pages/parts/button/add/floating_add_todo_item_buttton.dart
 import 'package:notes/pages/todo/add_todo_item_widget.dart';
 import 'package:notes/pages/todo/todo_page_widget.dart';
 import 'package:notes/service/note_service.dart';
+import 'package:notes/service/todo_item_service.dart';
 import 'package:notes/state/app_bar_state.dart';
 import 'package:notes/state/header_state.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,7 @@ class _MainWidgetState extends State<MainWidget>
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => NoteService()),
+          ChangeNotifierProvider(create: (context) => TodoItemService()),
           ChangeNotifierProvider(
               create: (context) => AppBarState(
                   AppBarFactory.headerAppBar(_headerState, _animateSwipe))),
