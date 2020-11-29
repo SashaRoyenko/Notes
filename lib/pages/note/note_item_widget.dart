@@ -53,8 +53,9 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
             ),
             Container(
               child: Stack(children: [
-                Opacity(
+                AnimatedOpacity(
                   opacity: _opacity,
+                  duration: Duration(milliseconds: 200),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Icon(

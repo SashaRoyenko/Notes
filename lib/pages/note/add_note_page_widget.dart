@@ -8,6 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:zefyr/zefyr.dart';
 
 class AddNotePageWidget extends StatefulWidget {
+  final navigationParams;
+
+  const AddNotePageWidget({Key key, this.navigationParams}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _AddNotePageWidgetState();
 }
@@ -33,7 +36,7 @@ class _AddNotePageWidgetState extends State<AddNotePageWidget> {
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
     _noteService = Provider.of<NoteService>(context);
-    _note = ModalRoute.of(context).settings.arguments;
+    _note = widget.navigationParams;
     if (_note != null) {
       var formattedText = json.decode(_note.jsonFormattedText);
       _controller = ZefyrController(NotusDocument.fromJson(formattedText));

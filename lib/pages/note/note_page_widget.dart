@@ -33,7 +33,9 @@ class _NotePageState extends State<NotePageWidget> {
           return snapshot.hasData
               ? _notesGrid(snapshot.data, context)
               : Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.amber,
+                  ),
                 );
         });
   }

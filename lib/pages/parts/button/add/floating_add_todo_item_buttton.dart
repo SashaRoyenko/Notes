@@ -8,6 +8,9 @@ class FloatingAddTodoItemButton extends StatefulWidget {
 }
 
 class _FloatingAddTodoItemButtonState extends State<FloatingAddTodoItemButton> {
+
+  double opacity = 0;
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -24,7 +27,6 @@ class _FloatingAddTodoItemButtonState extends State<FloatingAddTodoItemButton> {
             );
           },
         );*/
-
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,

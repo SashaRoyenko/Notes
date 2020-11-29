@@ -26,7 +26,9 @@ class _ToDoPageWidgetState extends State<ToDoPageWidget> {
           return snapshot.hasData
               ? _todoItemListViewWidget(snapshot.data, context)
               : Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.amber,
+                  ),
                 );
         });
   }
