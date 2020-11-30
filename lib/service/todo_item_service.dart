@@ -7,7 +7,7 @@ class TodoItemService extends ChangeNotifier {
   Future<List<TodoItem>> findAllTodoItemsOrderByUpdateDate() async {
     DaoFactory daoFactory = await DaoFactory.getInstance();
     TodoItemDao todoItemDao = daoFactory.todoItemDao;
-    return await todoItemDao.findAllTodoItemsOrderByUpdateDate();
+    return todoItemDao.findAllTodoItemsOrderByUpdateDate();
   }
 
   Future<void> insertTodoItem(TodoItem todoItem) async {

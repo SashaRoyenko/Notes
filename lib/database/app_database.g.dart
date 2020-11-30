@@ -200,7 +200,7 @@ class _$TodoItemDao extends TodoItemDao {
   @override
   Future<List<TodoItem>> findAllTodoItemsOrderByUpdateDate() async {
     return _queryAdapter.queryList(
-        'SELECT * FROM todo_items ORDER BY update_date DESC',
+        'SELECT * FROM todo_items ORDER BY is_done, update_date',
         mapper: (Map<String, dynamic> row) => TodoItem(
             row['id'] as int,
             row['text'] as String,

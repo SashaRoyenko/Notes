@@ -1,6 +1,6 @@
 class AppRoutes {
   static const HOME = "/";
   static const NOTE = "/note";
-  static const TODO = "/todo";
+  static const SETTINGS = "/settings";
   AppRoutes._();
 }

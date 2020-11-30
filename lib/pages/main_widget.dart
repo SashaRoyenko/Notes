@@ -7,7 +7,8 @@ import 'package:notes/pages/parts/button/add/floating_add_todo_item_buttton.dart
 import 'package:notes/pages/todo/add_todo_item_widget.dart';
 import 'package:notes/pages/todo/todo_page_widget.dart';
 import 'package:notes/service/note_service.dart';
-import 'package:notes/service/route_generator.dart';
+import 'package:notes/service/theme_service.dart';
+import 'file:///D:/KPI/4.1/flutter/notes/lib/utils/route_generator.dart';
 import 'package:notes/service/todo_item_service.dart';
 import 'package:notes/state/app_bar_state.dart';
 import 'package:notes/state/header_state.dart';
@@ -28,6 +29,7 @@ class _MainWidgetState extends State<MainWidget>
   AnimationController _animationController;
   CurvedAnimation _curvedAnimation;
   AppBarState _appBarState;
+  ThemeService _themeService;
 
   @override
   void initState() {
@@ -52,9 +54,11 @@ class _MainWidgetState extends State<MainWidget>
         providers: [
           ChangeNotifierProvider(create: (context) => NoteService()),
           ChangeNotifierProvider(create: (context) => TodoItemService()),
+          ChangeNotifierProvider(create: (context) => ThemeService()),
           ChangeNotifierProvider(
-              create: (context) => AppBarState(
-                  AppBarFactory.headerAppBar(_headerState, _animateSwipe))),
+              create: (context) =>
+                  AppBarState(
+                      AppBarFactory.headerAppBar(_headerState, _animateSwipe))),
           ChangeNotifierProvider(
               create: (context) => HeaderState(Colors.amber, Colors.grey)),
         ],
@@ -62,6 +66,7 @@ class _MainWidgetState extends State<MainWidget>
           builder: (context) {
             _appBarState = Provider.of<AppBarState>(context);
             _headerState = Provider.of<HeaderState>(context);
+            _themeService = Provider.of<ThemeService>(context);
             return MaterialApp(
               home: Scaffold(
                 appBar: _appBarState.appBar,
@@ -79,7 +84,7 @@ class _MainWidgetState extends State<MainWidget>
 //        ),
                 floatingActionButton: getAddButton(),
               ),
-              theme: ThemeData.dark(),
+              theme: _themeService.currentTheme,
               onGenerateRoute: RouteGenerator.generateRoute,
             );
           },
@@ -97,8 +102,8 @@ class _MainWidgetState extends State<MainWidget>
 
   Animation<Offset> _getAnimation() {
     return Tween(
-            begin: Offset.zero,
-            end: Offset(_headerState.index == 0 ? -1 : 1, 0.5))
+        begin: Offset.zero,
+        end: Offset(_headerState.index == 0 ? -1 : 1, 0.5))
         .animate(_curvedAnimation);
   }
 

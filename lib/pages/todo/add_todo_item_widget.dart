@@ -96,8 +96,9 @@ class _AddTodoPageWidgetState extends State<AddTodoItemPageWidget> {
   }
 
   void _saveTodoItem() {
+    int id = widget.todoItem != null ? widget.todoItem.id : null;
     var date = DateTime.now().toIso8601String();
-    TodoItem todoItem = TodoItem(null, textEditingController.text, date, false);
+    TodoItem todoItem = TodoItem(id, textEditingController.text, date, false);
     _todoItemService.insertTodoItem(todoItem);
     widget.parentCallback.call();
   }

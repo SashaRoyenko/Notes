@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:notes/enums/app_routes.dart';
 import 'package:notes/state/header_state.dart';
 import 'package:provider/provider.dart';
 
 class HeaderWidget extends StatefulWidget {
-
   final Function() _notifyParent;
+
   HeaderWidget(this._notifyParent);
 
   @override
@@ -13,8 +14,10 @@ class HeaderWidget extends StatefulWidget {
 
 class _HeaderWidgetState extends State<HeaderWidget> {
   HeaderState _state;
+
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
     _state = Provider.of<HeaderState>(context);
     return Stack(
       children: [
@@ -44,8 +47,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         Align(
           alignment: Alignment.topRight,
           child: IconButton(
-            onPressed: () => (print("Pressed")),
-            icon: Icon(Icons.more_vert),
+            onPressed: () => navigator.pushNamed(AppRoutes.SETTINGS),
+            icon: Icon(Icons.settings),
             color: Colors.white,
           ),
         ),
