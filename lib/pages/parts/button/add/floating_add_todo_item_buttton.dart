@@ -8,7 +8,6 @@ class FloatingAddTodoItemButton extends StatefulWidget {
 }
 
 class _FloatingAddTodoItemButtonState extends State<FloatingAddTodoItemButton> {
-
   double opacity = 0;
 
   @override
@@ -30,6 +29,7 @@ class _FloatingAddTodoItemButtonState extends State<FloatingAddTodoItemButton> {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           barrierColor: Colors.transparent,
           builder: (BuildContext context) {
             return Padding(

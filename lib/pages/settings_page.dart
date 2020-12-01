@@ -76,6 +76,7 @@ class _SettingsPageState extends State<SettingsPage>
                     },
                     child: Icon(
                       _isDarkTheme ? Icons.nights_stay : Icons.wb_sunny,
+                      color: Colors.amber,
                       key: Key(_isDarkTheme ? "darkThemeKey" : "lightThemeKey"),
                     ),
                   ),
@@ -88,7 +89,7 @@ class _SettingsPageState extends State<SettingsPage>
                       child: Text(
                         "Change theme",
                         textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 16),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                   ),

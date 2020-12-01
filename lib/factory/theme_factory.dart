@@ -8,11 +8,18 @@ class ThemeFactory {
   }
 
   static ThemeData getDarkTheme() {
-      return ThemeData.dark();
+    return ThemeData(
+        brightness: Brightness.dark, colorScheme: ColorScheme.dark());
   }
 
   static ThemeData getLightTheme() {
-    return ThemeData.light();
+    return ThemeData(
+      brightness: Brightness.light,
+      textTheme: TextTheme(
+//        bodyText1: TextStyle(fontSize: 16, color: Colors.white),
+          ),
+      scaffoldBackgroundColor: Colors.indigoAccent,
+      colorScheme: ColorScheme.light(),
+    );
   }
-
 }

@@ -40,16 +40,17 @@ class _NoteItemWidgetState extends State<NoteItemWidget>
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          color: Colors.white12,
+          color: Theme.of(context).cardColor,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               widget.note.text,
-              style: TextStyle(
-                fontSize: 16,
-              ),
+              style: Theme.of(context).textTheme.bodyText1,
+//              TextStyle(
+//                fontSize: 16,
+//              ),
             ),
             Container(
               child: Stack(children: [

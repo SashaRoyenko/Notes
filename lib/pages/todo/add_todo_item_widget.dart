@@ -42,7 +42,7 @@ class _AddTodoPageWidgetState extends State<AddTodoItemPageWidget> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-        color: Colors.black45,
+        color: Theme.of(context).colorScheme.surface,
       ),
       padding: EdgeInsets.all(15),
       child: Column(
@@ -82,7 +82,9 @@ class _AddTodoPageWidgetState extends State<AddTodoItemPageWidget> {
                 child: Text(
                   "Done",
                   style: TextStyle(
-                      color: _isTextFieldEmpty ? Colors.white70 : Colors.amber,
+                      color: _isTextFieldEmpty
+                          ? Theme.of(context).disabledColor
+                          : Colors.amber,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),

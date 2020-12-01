@@ -64,7 +64,7 @@ class _ToDoItemWidgetState extends State<ToDoItemWidget>
         padding: EdgeInsets.only(right: 15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
-          color: Colors.white12,
+          color: Theme.of(context).cardColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,8 +96,9 @@ class _ToDoItemWidgetState extends State<ToDoItemWidget>
                 Text(
                   widget._todoItem.text,
                   style: TextStyle(
-                    color:
-                        widget._todoItem.isDone ? Colors.white10 : Colors.white,
+                    color: widget._todoItem.isDone
+                        ? Theme.of(context).disabledColor
+                        : Theme.of(context).textTheme.overline.color,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     decoration: widget._todoItem.isDone
