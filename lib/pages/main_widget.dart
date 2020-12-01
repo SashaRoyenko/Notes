@@ -8,9 +8,8 @@ import 'package:notes/service/theme_service.dart';
 import 'package:notes/service/todo_item_service.dart';
 import 'package:notes/state/app_bar_state.dart';
 import 'package:notes/state/header_state.dart';
+import 'package:notes/utils/route_generator.dart';
 import 'package:provider/provider.dart';
-
-import 'file:///D:/KPI/4.1/flutter/notes/lib/utils/route_generator.dart';
 
 import 'note/note_page_widget.dart';
 
